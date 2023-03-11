@@ -24,6 +24,8 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
 COPY config.xml /etc/FAHclient/config.xml
+COPY start.bash /start.bash
+COPY stop.bash /stop.bash
 
 WORKDIR "/fah"
 VOLUME ["/fah"]
