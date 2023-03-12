@@ -17,6 +17,8 @@ async fn post_vehicle(
 
     let mut lk = vehicles.write().unwrap();
 
+    println!("Updating {}", vehicle.vid);
+
     let res = lk.vehicle.iter_mut().find(|v| v.vid == vehicle.vid);
 
     match res {
@@ -44,6 +46,8 @@ async fn delete_vehicle(
 
     let mut lk = vehicles.write().unwrap();
 
+    println!("Attempting to remove: {}", vehicle.vid);
+
     let pos = lk.vehicle.iter().position(|v| v.vid == vehicle.vid);
 
     if let Some(idx) = pos {
@@ -57,6 +61,7 @@ async fn delete_vehicle(
 /// Returns all vehicles
 #[get("/vehicles")]
 async fn get_vehicles(data: web::Data<Arc<RwLock<Vehicles>>>) -> impl Responder {
+    println!("hit /vehicles");
     let vehicles = data.into_inner();
 
     let vehicles = vehicles.write().unwrap().vehicle.clone();
@@ -68,6 +73,8 @@ async fn get_vehicles(data: web::Data<Arc<RwLock<Vehicles>>>) -> impl Responder 
 async fn main() -> std::io::Result<()> {
     let state = Arc::new(RwLock::new(Vehicles::default()));
 
+    println!("Backend booted...");
+
     HttpServer::new(move || {
         App::new()
             .app_data(web::Data::new(state.clone()))
@@ -75,7 +82,7 @@ async fn main() -> std::io::Result<()> {
             .service(get_vehicles)
             .service(delete_vehicle)
     })
-    .bind(("127.0.0.1", 8080))?
+    .bind(("0.0.0.0", 80))?
     .run()
     .await
 }
