@@ -1,6 +1,7 @@
 import requests
 from structs import Location
 
+
 class FordClient():
 
     def __init__(self, Id):
@@ -9,43 +10,29 @@ class FordClient():
         self.AppID = AppID = "afdc085b-377a-4351-b23e-5e1d35fb3700"
         self.Id = Id
 
-        
-
-    def getVehicleId(self):
+    def getVehicleModel(self, Id):
         r = requests.get(url=self.url + "/api/fordconnect/v2/vehicles", headers={
                          'Authorization': 'Bearer ' + self.Token, 'Application-Id': self.AppID, 'Accept': 'application/json', 'Content-Type': 'application/json'})
         for i in range(len(r.json().get("vehicles"))):
-            print(i,"VehicleId", r.json().get("vehicles")[i].get("vehicleId"))
+            # print(i,"VehicleId", r.json().get("vehicles")[i].get("vehicleId"))
+            if r.json().get("vehicles")[i].get("vehicleId") == Id:
+                # print("Model", r.json().get("vehicles")[i].get("modelName"))
+                return r.json().get("vehicles")[i].get("modelName")
 
     def printVehicleId(self, Id):
-        print("Id:", self.Id)
-
+        # print("Id:", self.Id)
+        return Id
 
     def getBattery(self, Id) -> float:
-        r = requests.get(url=self.url + "/api/fordconnect/v1/simulator/"+ self.Id +"/battery", headers={
+        r = requests.get(url=self.url + "/api/fordconnect/v1/simulator/" + self.Id + "/battery", headers={
                          'Authorization': 'Bearer ' + self.Token, 'Application-Id': self.AppID, 'Accept': 'application/json', 'Content-Type': 'application/json'})
-        print("batt:", r.json().get("capacity").get("percentage"))
+        # print("batt:", r.json().get("capacity").get("percentage"))
 
         return float(r.json().get("capacity").get("percentage"))
 
     def getLocation(self, Id):
-        r = requests.get(url=self.url + "/api/fordconnect/v2/vehicles/"+ self.Id +"/location", headers={
+        r = requests.get(url=self.url + "/api/fordconnect/v2/vehicles/" + self.Id + "/location", headers={
                          'Authorization': 'Bearer ' + self.Token, 'Application-Id': self.AppID, 'Accept': 'application/json', 'Content-Type': 'application/json'})
-        print("long:", r.json().get("vehicleLocation").get("longitude"),"\n"+ "lad:", r.json().get("vehicleLocation").get("latitude") )
+        # print("long:", r.json().get("vehicleLocation").get("longitude"),"\n"+ "lad:", r.json().get("vehicleLocation").get("latitude") )
 
         return Location(float(r.json().get("vehicleLocation").get("longitude")), float(r.json().get("vehicleLocation").get("latitude")))
-
-
-Id1 = "8a73d4e286cd6daf0186cd6eac160000"
-Id2 = "8a73d4e286cd6daf0186cd6f30230001"
-
-print("\n")
-v1 = FordClient(Id1)
-v1.printVehicleId(Id1)
-v1.getBattery(Id1)
-v1.getLocation(Id1).lat
-v1.getLocation(Id1).lon
-print("\n")
-
-
-
