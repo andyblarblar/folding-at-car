@@ -23,13 +23,21 @@ RUN apt-get update \
     && apt-get purge --autoremove -y curl \
     && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
-COPY configs/config.xml /etc/FAHclient/config.xml
+RUN apt-get update \
+    && apt-get install python3 python3-pip -y --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
+
+RUN pip3 install requests
+
+# Need to delete to avoid overwriting
+RUN rm /etc/fahclient/config.xml
+
+COPY configs/config.xml /etc/fahclient/config.xml
 COPY scripts/start-fah.bash /start-fah.bash
 COPY scripts/stop-fah.bash /stop-fah.bash
 
-WORKDIR "/fah"
-VOLUME ["/fah"]
-EXPOSE 7396 36330
+COPY car.py /car.py
+COPY fordclient.py /fordclient.py
+COPY structs.py /structs.py
 
-ENTRYPOINT ["/usr/bin/FAHClient"]
-#ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["python3", "car.py"]

@@ -7,7 +7,7 @@ def is_in_range(lat: float, lon: float) -> bool:
     """
     Returns true if we are in the correct area to fold.
     """
-    True #TODO make this function
+    return True  # TODO make this function
 
 
 if __name__ == "__main__":
@@ -17,19 +17,19 @@ if __name__ == "__main__":
     print("init...")
 
     while 1:
-        print("Polling....")
+        print("Polling....", flush=True)
 
-        for client, is_running in zip(clients, is_runnings):
+        for (i, (client, is_running)) in enumerate(zip(clients, is_runnings), start=0):
             vs = client.getVehicle()
 
             if not is_running and is_in_range(vs.lat, vs.long) and vs.plug:
-                print(f"Starting folding on {vs.id}")
-                subprocess.run("/bin/bash", "star-fah.bash")
-                is_running = True
-                #TODO tell backend we exist
+                print(f"Starting folding on {vs.id}", flush=True)
+                subprocess.call(["/bin/bash", "/start-fah.bash"])
+                is_runnings[i] = True
+                # TODO tell backend we exist
             elif is_running and (not is_in_range(vs.lat, vs.long) or not vs.plug):
-                print(f"Stopping folding on {vs.id}")
-                subprocess.run("/bin/bash", "stop-fah.bash")
-                is_running = False
-                #TODO delete from backend
+                print(f"Stopping folding on {vs.id}", flush=True)
+                subprocess.call(["/bin/bash", "/stop-fah.bash"])
+                is_runnings[i] = False
+                # TODO delete from backend
         time.sleep(1)
