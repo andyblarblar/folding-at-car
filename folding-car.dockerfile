@@ -24,12 +24,12 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
 COPY config.xml /etc/FAHclient/config.xml
-COPY start.bash /start.bash
-COPY stop.bash /stop.bash
+COPY start-fah.bash /start-fah.bash
+COPY stop-fah.bash /stop-fah.bash
 
 WORKDIR "/fah"
 VOLUME ["/fah"]
 EXPOSE 7396 36330
 
-#ENTRYPOINT ["/usr/bin/FAHClient"]
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["/usr/bin/FAHClient"]
+#ENTRYPOINT ["/bin/bash"]
