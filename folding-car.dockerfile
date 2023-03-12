@@ -23,9 +23,9 @@ RUN apt-get update \
     && apt-get purge --autoremove -y curl \
     && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
-COPY config.xml /etc/FAHclient/config.xml
-COPY start-fah.bash /start-fah.bash
-COPY stop-fah.bash /stop-fah.bash
+COPY configs/config.xml /etc/FAHclient/config.xml
+COPY scripts/start-fah.bash /start-fah.bash
+COPY scripts/stop-fah.bash /stop-fah.bash
 
 WORKDIR "/fah"
 VOLUME ["/fah"]
