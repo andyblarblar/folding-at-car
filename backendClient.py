@@ -15,9 +15,9 @@ class BackendClient:
         response = requests.post(self.url, json=data)
 
         if response.status_code == 202 or response.status_code == 201:
-            print("Backend posted successfully.")
+            print("Backend posted successfully.", flush=True)
         else:
-            print(f"Error: {response.status_code}")
+            print(f"Error: {response.status_code}", flush=True)
 
     def delete(self, vid):
         data = {
@@ -29,6 +29,6 @@ class BackendClient:
         response = requests.delete(self.url, json=data)
 
         if response.status_code == 202 or response.status_code == 201 or response.status_code == 200:
-            print("Backend deleted successfully.")
+            print("Backend deleted successfully.", flush=True)
         else:
-            print(f"Error: {response.status_code}")
+            print(f"Error: {response.status_code}", flush=True)
