@@ -1,5 +1,5 @@
 FROM nvidia/cuda:11.2.2-base-ubuntu18.04
-LABEL description="Official Folding@home GPU Container"
+LABEL description="Ford F150 Lightning Mock-Up"
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
