@@ -76,7 +76,11 @@ async fn main() -> std::io::Result<()> {
     println!("Backend booted...");
 
     HttpServer::new(move || {
+        //We don't need no security 😎
+        let cors = actix_cors::Cors::permissive();
+
         App::new()
+            .wrap(cors)
             .app_data(web::Data::new(state.clone()))
             .service(post_vehicle)
             .service(get_vehicles)
