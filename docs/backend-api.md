@@ -10,8 +10,8 @@ Contains a list of all currently charging compute nodes.
 
 ## Endpoints
 
-### /vehicle/{VID}
-- Get - Returns an individual vehicles state if avail. Retruns HTTP not avial otherwise
+### /vehicle
+- Get - Returns an individual vehicles state if avail. Retruns HTTP not avail otherwise
 - Post (body Vehicle) - Sets the vehicles state, or updates it if it exists
 - Delete - Removes vehicle, to be called when car stops computing
 
