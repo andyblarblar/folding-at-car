@@ -1,4 +1,5 @@
 from fordclient import FordClient
+from backendClient import BackendClient
 import subprocess
 import time
 
@@ -14,6 +15,8 @@ if __name__ == "__main__":
     clients = [FordClient("8a73d4e286cd6daf0186cd6eac160000"), FordClient("8a73d4e286cd6daf0186cd6f30230001")]
     is_runnings = [False, False]
 
+    backend_client = BackendClient()
+
     print("init...")
 
     while 1:
@@ -26,10 +29,11 @@ if __name__ == "__main__":
                 print(f"Starting folding on {vs.id}", flush=True)
                 subprocess.call(["/bin/bash", "/start-fah.bash"])
                 is_runnings[i] = True
-                # TODO tell backend we exist
+                backend_client.post(vs.id, vs.batt, vs.modelName)
+
             elif is_running and (not is_in_range(vs.lat, vs.long) or not vs.plug):
                 print(f"Stopping folding on {vs.id}", flush=True)
                 subprocess.call(["/bin/bash", "/stop-fah.bash"])
                 is_runnings[i] = False
-                # TODO delete from backend
+                backend_client.delete(vs.id)
         time.sleep(1)

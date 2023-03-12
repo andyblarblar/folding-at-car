@@ -38,6 +38,7 @@ COPY scripts/stop-fah.bash /stop-fah.bash
 
 COPY car.py /car.py
 COPY fordclient.py /fordclient.py
+COPY backendClient.py /backendClient.py
 COPY structs.py /structs.py
 
 ENTRYPOINT ["python3", "car.py"]
