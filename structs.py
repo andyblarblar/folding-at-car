@@ -1,9 +1,8 @@
-class VehicleStatus():
-    def __init__(self, modelName, Id, Plug, Batt, Long: float, Lat: float):
-        self.modelName = modelName
-        self.Id = Id
-        self.Plug = Plug
-        self.Batt = Batt
-        self.Long = Long
-        self.Lat = Lat
-
+class VehicleStatus:
+    def __init__(self, model_name, identifier, plug, batt, long: float, lat: float):
+        self.modelName = model_name
+        self.Id = identifier
+        self.Plug = plug
+        self.Batt = batt
+        self.Long = long
+        self.Lat = lat
