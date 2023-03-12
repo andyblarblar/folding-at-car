@@ -8,12 +8,8 @@ def is_in_range(lat: float, lon: float) -> bool:
     """
     Returns true if we are in the correct area to fold.
     """
-    epsilon = 0.1                    
-    if (float(abs(lat) - abs(42.266428465810954)) <=epsilon and float(abs(lon)- abs(-83.74521493222385))<=epsilon):
-    
-      return True #TODO make this function
-    else :
-        return False
+    epsilon = 0.1
+    return float(abs(lat) - abs(42.266428465810954)) <= epsilon and float(abs(lon) - abs(-83.74521493222385)) <= epsilon
 
 
 if __name__ == "__main__":
