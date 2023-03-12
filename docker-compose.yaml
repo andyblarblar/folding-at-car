@@ -1,0 +1,12 @@
+services:
+
+  backend:
+    build:
+      dockerfile: ./backend.dockerfile
+    expose:
+      - "80:80"
+  car:
+    build:
+      dockerfile: ./folding-car.dockerfile
+    depends_on:
+      - backend

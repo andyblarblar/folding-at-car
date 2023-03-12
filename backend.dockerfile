@@ -9,5 +9,7 @@ WORKDIR /backend
 
 RUN cargo build --release
 
+COPY index.html /index.html
+
 EXPOSE 80
 ENTRYPOINT ["/backend/target/release/backend"]

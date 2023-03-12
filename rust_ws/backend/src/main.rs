@@ -1,6 +1,7 @@
 mod types;
 
 use crate::types::{Vehicle, Vehicles};
+use actix_files::Files;
 use actix_web::http::StatusCode;
 use actix_web::web::Json;
 use actix_web::{delete, get, post, web, App, HttpServer, Responder};
@@ -85,6 +86,7 @@ async fn main() -> std::io::Result<()> {
             .service(post_vehicle)
             .service(get_vehicles)
             .service(delete_vehicle)
+            .service(Files::new("/", "/").index_file("index.html"))
     })
     .bind(("0.0.0.0", 80))?
     .run()
