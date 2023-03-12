@@ -1,12 +1,15 @@
-services:
+version: "3"
 
+services:
   backend:
     build:
       dockerfile: ./backend.dockerfile
     ports:
       - "80:80"
+    network_mode: "host"
   car:
     build:
       dockerfile: ./folding-car.dockerfile
     depends_on:
       - backend
+    network_mode: "host"
