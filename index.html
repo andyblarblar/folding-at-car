@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!-- Project Hackathon
+    Brandon Huynh
+ -->
+<style>
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table {
+  border-collapse: collapse;
+}
+tr {
+  border-bottom: 2px solid #ccc;
+}
+th, td {
+  text-align: left;
+  padding: 4px;
+  font-size: 50px;
+}
+</style>
+<script>
+
+    var lam = () => {
+        fetch('http://localhost:80/vehicles')           //api for the get request
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("myTable").innerHTML = "<tr>\
+            <th>Model</th>\
+            <th>Vin</th>\
+            <th>Battery %</th>\
+        </tr>"
+                for (vehicle of data) {
+                    var modelName = vehicle["model"]
+                    var Id = vehicle["vid"]
+                    var Batt = vehicle["charging_status"]
+
+                    var table = document.getElementById("myTable");
+
+                    var row = table.insertRow();
+
+                    var cell1 = row.insertCell();
+                    var cell2 = row.insertCell();
+                    var cell3 = row.insertCell();
+
+                    cell1.innerHTML = modelName;
+                    cell2.innerHTML = Id;
+                    cell3.innerHTML = Batt;
+
+
+                    // document.getElementById("modelName").innerHTML = modelName;
+                    // document.getElementById("Id").innerHTML = Id;
+                    // document.getElementById("Batt").innerHTML = Batt;
+                }
+            });
+        console.log("loop!");
+        setTimeout(
+            lam, 1000);
+    };
+    lam()
+
+</script>
+
+<head>
+    <meta charset="UTF-8">
+    <title> Folding@Car </title>
+</head>
+
+<body style="background-color: #121212;">
+
+    <table class="center", id="myTable", style="background-color: #ffffff;">
+        <tr>
+            <th>Model</th>
+            <th>Vin</th>
+            <th>Battery %</th>
+        </tr>
+    </table>
+
+</body>
+
+</html>
